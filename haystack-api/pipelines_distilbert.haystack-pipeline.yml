@@ -4,12 +4,12 @@ components:
   - name: DocumentStore
     type: ElasticsearchDocumentStore
     params:
-      host: 192.168.100.24
+      host: localhost
   - name: Retriever # Selects the most relevant documents from the document store and passes them on to the Reader
     type: EmbeddingRetriever # Uses a Transformer model to encode the document and the query
     params:
       document_store: DocumentStore
-      embedding_model: sentence-transformers/multi-qa-mpnet-base-dot-v1 # multi-qa-MiniLM-L6-dot-v1
+      embedding_model: sentence-transformers/multi-qa-mpnet-base-dot-v1 
       embed_meta_fields:
         - filename
       top_k: 10 # The number of results to return
