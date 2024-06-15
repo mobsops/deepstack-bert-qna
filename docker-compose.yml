@@ -6,15 +6,17 @@ services:
     ports:
       - "9200:9200"
     restart: on-failure
+    hostname: elasticsearch
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9200/_cat/health"]
+      test: ["CMD", "curl", "-f", "http://elasticsearch:9200/_cat/health"]
       interval: 10s
       timeout: 1s
       retries: 30
       start_period: 30s
+    mem_limit: 2g
     environment:
       - discovery.type=single-node
-      - ES_JAVA_OPTS=-Xms1024m -Xmx1024m 
+      - ES_JAVA_OPTS="-Xmx1g -Xms1g""
       - xpack.security.enabled=false
 
   haystack-api:
@@ -22,14 +24,15 @@ services:
     ports:
       - "8000:8000"
     restart: on-failure
+    hostname: haystack-api
     volumes:
       - ./haystack-api:/home/node/app
     environment:
-      - DOCUMENTSTORE_PARAMS_HOST=localhost
+      - DOCUMENTSTORE_PARAMS_HOST=elasticsearch
       - PIPELINE_YAML_PATH=/home/node/app/pipelines_distilbert.haystack-pipeline.yml
-#    depends_on:
-#      elasticsearch:
-#        condition: service_healthy
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
 
   ui:
     build: .
@@ -37,6 +40,7 @@ services:
     ports:
       - "8501:8501"
     restart: on-failure
+    hostname: demo-ui
     environment:
       - API_ENDPOINT=http://haystack-api:8000
       - DEFAULT_QUESTION_AT_STARTUP

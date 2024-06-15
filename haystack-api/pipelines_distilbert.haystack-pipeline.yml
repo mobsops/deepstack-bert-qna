@@ -26,7 +26,7 @@ components:
   - name: Reader # The component that actually fetches answers from among the 20 documents returned by retriever 
     type: FARMReader # Transformer-based reader, specializes in extractive QA
     params:
-      model_name_or_path: distilbert/distilbert-base-uncased-finetuned-sst-2-english
+      model_name_or_path: jackaduma/SecRoBERTa
  #dmis-lab/biobert-large-cased-v1.1-squad # dmis-lab/biobert-base-cased-v1.1-squad
       context_window_size: 700 # The size of the window around the answer span
   - name: FileTypeClassifier # Routes files based on their extension to appropriate converters, by default txt, pdf, md, docx, html
