@@ -62,7 +62,7 @@ Once done, modify the `elasticsearch` section in the `docker-compose.yml` file, 
 
 Finally, run the compose file as usual:
 ```sh
-docker-compose up
+podman-compose up
 ```
 
 ## Development
@@ -76,7 +76,7 @@ pip install -e .
 The app requires the Haystack RESTful API to be ready and accepting connections at `http://localhost:8000`, you can use Docker compose to start only the required containers:
 
 ```sh
-docker-compose up elasticsearch haystack-api
+podman-compose up elasticsearch haystack-api
 ```
 
 At this point you should be able to make changes and run the streamlit application with:
